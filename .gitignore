@@ -1,0 +1,8 @@
+**/node_modules
+db/
+redis-data/
+redis.conf/
+
+.DS_Store
+**/.env
+**/.DS_Store
