@@ -10,10 +10,5 @@
     ]
   },
   "scripts": {
-    "start-campus": "lerna exec --scope campus-service -- yarn start",
-    "start-post": "lerna exec --scope post-service -- yarn start",
-    "start-space": "lerna exec --scope space-service -- yarn start",
-    "start-user": "lerna exec --scope user-service -- yarn start",
-    "start-all": "lerna exec yarn start --scope={campus-service,space-service,post-service,user-service}"
   }
 }

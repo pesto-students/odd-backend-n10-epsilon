@@ -6,3 +6,5 @@ redis.conf/
 .DS_Store
 **/.env
 **/.DS_Store
+
+yarn.lock
