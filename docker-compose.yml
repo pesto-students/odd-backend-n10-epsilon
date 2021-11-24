@@ -1,0 +1,109 @@
+version: '3'
+services:
+
+
+  
+  nosql-db:
+    image: mongo
+    ports:
+      - "27017:27017"
+    container_name: nosql-db
+    volumes:
+      - ./db/:/data/db
+
+  redis:
+    image: "redis"
+
+    command: redis-server --requirepass sOmE_sEcUrE_pAsS
+
+    ports:
+     - "6379:6379"
+
+    volumes:
+     - $PWD/redis-data:/var/lib/redis
+     - $PWD/redis.conf:/usr/local/etc/redis/redis.conf
+
+    environment:
+     - REDIS_REPLICATION_MODE=master
+
+  backend:
+    build:
+      dockerfile: Dockerfile
+      context: ./backend
+    container_name: backend
+    volumes:
+      - .:/app
+      - /app/backend/node_modules
+
+  user:
+    build:
+      dockerfile: Dockerfile
+      context: ./backend/packages/user
+    container_name: user
+    ports:
+      - "4001:4001"
+    restart: always
+    depends_on:
+      - "nosql-db"
+      - "redis"
+    volumes:
+      - .:/app
+      - /app/backend/packages/user/node_modules
+
+  admin:
+    build:
+      dockerfile: Dockerfile
+      context: ./backend/packages/admin
+    container_name: admin
+    ports:
+      - "4002:4002"
+    restart: always
+    depends_on:
+      - "nosql-db"
+      - "redis"
+    volumes:
+      - .:/app
+      - /app/backend/packages/admin/node_modules
+
+  driver:
+    build:
+      dockerfile: Dockerfile
+      context: ./backend/packages/driver
+    container_name: driver
+    ports:
+      - "4003:4003"
+    restart: always
+    depends_on:
+      - "nosql-db"
+      - "redis"
+    volumes:
+      - .:/app
+      - /app/backend/packages/driver/node_modules
+  
+  order:
+    build:
+      dockerfile: Dockerfile
+      context: ./backend/packages/order
+    container_name: order
+    ports:
+      - "4004:4004"
+    restart: always
+    depends_on:
+      - "nosql-db"
+      - "redis"
+    volumes:
+      - .:/app
+      - /app/backend/packages/driver/node_modules
+
+
+
+ 
+  nginx-proxy:
+    build:
+      dockerfile: Dockerfile
+      context: ./backend/packages/proxy
+    depends_on:
+      - user
+    ports:
+      - "80:80"
+    restart: always

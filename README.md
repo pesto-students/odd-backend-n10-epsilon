@@ -1,1 +1,1 @@
-# NINJA-TEMPLATE
+docker-compose && docker-compose up
