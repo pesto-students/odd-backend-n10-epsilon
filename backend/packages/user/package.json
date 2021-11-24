@@ -2,10 +2,12 @@
   "name": "user-service",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "NODE_ENV=prod nodemon --experimental-specifier-resolution=node ./app.js"
   },
   "dependencies": {
+    "@odd/common":"0.0.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "~2.6.1",
