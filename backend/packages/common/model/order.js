@@ -72,12 +72,20 @@ const orderSchema = new mongoose.Schema(
 
     track_history: [track_history],
     pickup_info: location,
+    pickup_otp: {
+      type: String,
+    },
     drop_off_info: location,
-
+    drop_off_otp: {
+      type: String,
+    },
     fare: {
       type: Number,
     },
     driver_distance: {
+      type: Number,
+    },
+    distance: {
       type: Number,
     },
     payment_status: {

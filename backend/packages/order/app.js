@@ -8,9 +8,11 @@ import { fileURLToPath } from "url";
 import { dirname } from "path";
 
 import indexRouter from "./routes";
-import usersRouter from "./routes/users";
+
+import { config, connectDB } from "../common";
 
 var app = express();
+connectDB();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -26,7 +28,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -53,7 +54,7 @@ const server = http.createServer(app);
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || "4001");
+var port = normalizePort(config.PORT);
 app.set("port", port);
 
 /**

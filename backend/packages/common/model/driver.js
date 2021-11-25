@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import validator from "validator";
-import jwt from "jwt";
-import config from "../config";
+import jwt from "jsonwebtoken";
+import { config } from "../config";
 import { otpGenerator } from "../helper";
 
 const driverSchema = new mongoose.Schema({
@@ -64,11 +64,15 @@ const driverSchema = new mongoose.Schema({
     default: "pending",
     enum: ["approve", "rejected", "pending"],
   },
-
+  isOnline: {
+    type: Boolean,
+    default: false,
+  },
   location: {
     type: { type: String, default: "Point" },
     coordinates: { type: [Number], index: "2dsphere" },
   },
+  doc:[],
   tokens: [
     {
       token: {

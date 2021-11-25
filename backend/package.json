@@ -9,6 +9,5 @@
       "packages/**"
     ]
   },
-  "scripts": {
-  }
+  "scripts": {}
 }

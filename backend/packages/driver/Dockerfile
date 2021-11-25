@@ -4,7 +4,6 @@ WORKDIR /app/backend/packages/driver
 
 COPY package.json .
 
-RUN yarn
 
 COPY . .
 
