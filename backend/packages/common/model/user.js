@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import validator from "validator";
 import jwt from "jsonwebtoken";
 import { otpGenerator } from "../helper";
-import config from "../config";
+import {config} from "../config";
 
 const userSchema = new mongoose.Schema({
   first_name: {

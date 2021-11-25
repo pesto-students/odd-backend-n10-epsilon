@@ -1,5 +1,6 @@
-const mongoose = require("mongoose");
-const { default: config } = require("../config");
+import mongoose from "mongoose";
+
+import {config} from "../config";
 
 const adminSchema = new mongoose.Schema({
   firstName: {

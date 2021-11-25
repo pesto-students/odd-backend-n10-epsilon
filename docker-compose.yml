@@ -46,6 +46,7 @@ services:
     depends_on:
       - "nosql-db"
       - "redis"
+      - "backend"
     volumes:
       - .:/app
       - /app/backend/packages/user/node_modules
@@ -61,6 +62,7 @@ services:
     depends_on:
       - "nosql-db"
       - "redis"
+      - "backend"
     volumes:
       - .:/app
       - /app/backend/packages/admin/node_modules
@@ -76,6 +78,7 @@ services:
     depends_on:
       - "nosql-db"
       - "redis"
+      - "backend"
     volumes:
       - .:/app
       - /app/backend/packages/driver/node_modules
@@ -91,6 +94,7 @@ services:
     depends_on:
       - "nosql-db"
       - "redis"
+      - "backend"
     volumes:
       - .:/app
       - /app/backend/packages/driver/node_modules
@@ -104,6 +108,9 @@ services:
       context: ./backend/packages/proxy
     depends_on:
       - user
+      - driver
+      - admin
+      - order
     ports:
       - "80:80"
     restart: always

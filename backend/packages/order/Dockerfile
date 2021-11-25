@@ -4,7 +4,6 @@ WORKDIR /app/backend/packages/order
 
 COPY package.json .
 
-RUN yarn
 
 COPY . .
 
