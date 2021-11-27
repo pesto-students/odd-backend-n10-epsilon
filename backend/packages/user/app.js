@@ -7,10 +7,8 @@ import http from "http";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 
-import {connectDB} from "@odd/common"
-import routes from "./routes";
-
-// import { mongoose } from "mongoose";
+import { connectDB } from "../common";
+import { UsersRouter } from "./routes";
 
 var app = express();
 connectDB();
@@ -28,11 +26,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", routes);
+app.use("/", UsersRouter);
 
-app.get("/", function (req, res) {
-  res.send("")
-})
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

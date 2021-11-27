@@ -1,9 +1,15 @@
-var express = require('express');
-var router = express.Router();
+import express from "express";
+import * as Controller from "../controller/user";
+import { auth } from "../../common";
+const router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+/* POST users on boarding. */
+router.post("/login", Controller.authGateWay);
 
-module.exports = router;
+/* POST users on verify otp. */
+router.post("/verify_otp", Controller.verifyOtp);
+
+/* POST users on verify otp. */
+router.get("/logout", auth, Controller.logout);
+
+export default router;

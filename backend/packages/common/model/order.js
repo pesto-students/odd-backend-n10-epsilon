@@ -60,16 +60,8 @@ const orderSchema = new mongoose.Schema(
     status: {
       type: String,
       default: "open",
-      enum: [
-        "open",
-        "accepted",
-        "arrived",
-        "inprogress",
-        "cancel",
-        "delivered",
-      ],
+      enum: ["open", "accepted", "inprogress", "cancel", "delivered"],
     },
-
     track_history: [track_history],
     pickup_info: location,
     pickup_otp: {
@@ -99,6 +91,7 @@ const orderSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
 
 orderSchema.statics.create_order = () => {};
 

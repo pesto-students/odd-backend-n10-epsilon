@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import validator from "validator";
 import jwt from "jsonwebtoken";
 import { otpGenerator } from "../helper";
-import {config} from "../config";
+import { config } from "../config";
 
 const userSchema = new mongoose.Schema({
   first_name: {
@@ -89,7 +89,6 @@ userSchema.statics.findByCredentials = async (mobile_number) => {
   const user = await User.findOne({ mobile_number });
 
   const otp = otpGenerator();
-  // await sendMessage(otp, mobileNumber);
 
   if (!user) {
     const user = new User({ mobile_number, otp_verify: otp });
@@ -100,7 +99,7 @@ userSchema.statics.findByCredentials = async (mobile_number) => {
   return await user.save();
 };
 
-userSchema.statics.verify_user_otp = async (id, otp) => {
+userSchema.statics.verifyUserOtp = async (id, otp) => {
   const user = await User.findOne({ _id: id, otp_verify: otp });
   if (!user) {
     throw new Error("Invalid OTP");

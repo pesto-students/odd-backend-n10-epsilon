@@ -7,9 +7,9 @@ import http from "http";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 
-import indexRouter from "./routes";
+import { Routes } from "./routes";
 
-import { config,connectDB } from "@odd/common";
+import { config, connectDB } from "../common";
 
 var app = express();
 connectDB();
@@ -27,8 +27,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
-
+app.use("/", Routes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
