@@ -26,19 +26,12 @@ services:
     environment:
      - REDIS_REPLICATION_MODE=master
 
-  backend:
-    build:
-      dockerfile: Dockerfile
-      context: ./backend
-    container_name: backend
-    volumes:
-      - .:/app
-      - /app/backend/node_modules
+
 
   user:
     build:
       dockerfile: Dockerfile
-      context: ./backend/packages/user
+      context: ./user
     container_name: user
     ports:
       - "4001:4001"
@@ -49,12 +42,12 @@ services:
       - "backend"
     volumes:
       - .:/app
-      - /app/backend/packages/user/node_modules
+      - /app/user/node_modules
 
   admin:
     build:
       dockerfile: Dockerfile
-      context: ./backend/packages/admin
+      context: ./admin
     container_name: admin
     ports:
       - "4002:4002"
@@ -62,15 +55,14 @@ services:
     depends_on:
       - "nosql-db"
       - "redis"
-      - "backend"
     volumes:
       - .:/app
-      - /app/backend/packages/admin/node_modules
+      - /app/admin/node_modules
 
   driver:
     build:
       dockerfile: Dockerfile
-      context: ./backend/packages/driver
+      context: ./driver
     container_name: driver
     ports:
       - "4003:4003"
@@ -78,15 +70,14 @@ services:
     depends_on:
       - "nosql-db"
       - "redis"
-      - "backend"
     volumes:
       - .:/app
-      - /app/backend/packages/driver/node_modules
+      - /app/driver/node_modules
   
   order:
     build:
       dockerfile: Dockerfile
-      context: ./backend/packages/order
+      context: ./order
     container_name: order
     ports:
       - "4004:4004"
@@ -94,10 +85,9 @@ services:
     depends_on:
       - "nosql-db"
       - "redis"
-      - "backend"
     volumes:
       - .:/app
-      - /app/backend/packages/driver/node_modules
+      - /app/order/node_modules
 
 
 
@@ -105,7 +95,7 @@ services:
   nginx-proxy:
     build:
       dockerfile: Dockerfile
-      context: ./backend/packages/proxy
+      context: ./proxy
     depends_on:
       - user
       - driver
