@@ -17,6 +17,7 @@ router.get("/my_details", auth, Controller.myDetails);
 router.get("/user_listing", auth, UserController.getAllUsersList);
 router.get("/driver_listing", auth, DriverController.getAllDriverList);
 router.get("/order_listing", auth, OrderController.getAllOrderList);
+router.get("/static", auth, OrderController.getCount);
 router.get("/vehicle_listing", auth, VehicleController.getAllVehicleList);
 
 export default router;
