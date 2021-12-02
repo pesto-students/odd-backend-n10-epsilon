@@ -1,7 +1,5 @@
-version: '3'
+version: '1'
 services:
-
-
   
   nosql-db:
     image: mongo
