@@ -1,7 +1,5 @@
-version: '3'
+version: "3.4.9"
 services:
-
-
   
   nosql-db:
     image: mongo
@@ -39,7 +37,6 @@ services:
     depends_on:
       - "nosql-db"
       - "redis"
-      - "backend"
     volumes:
       - .:/app
       - /app/user/node_modules

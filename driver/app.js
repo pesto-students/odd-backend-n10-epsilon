@@ -9,7 +9,7 @@ import { dirname } from "path";
 
 import { Routes } from "./routes";
 
-import { config, connectDB } from "@odd_common/common";
+import { config, connectDB, cors} from "@odd_common/common";
 
 var app = express();
 connectDB();
@@ -26,7 +26,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-
+app.use(cors());
 app.use("/", Routes);
 
 // catch 404 and forward to error handler

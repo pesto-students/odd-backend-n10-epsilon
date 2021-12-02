@@ -9,6 +9,8 @@ router.post("/verify_otp", Controller.verifyOtp);
 
 router.post("/update_profile", auth, Controller.completeProfile);
 
+router.get("/toggle_mode", auth, Controller.toggleMode);
+
 router.post("/upload_document", auth, Controller.uploadDocument);
 
 router.get("/logout", Controller.logout);

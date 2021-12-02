@@ -1,13 +1,13 @@
 {
   "name": "user-service",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "start": "NODE_ENV=prod nodemon --experimental-specifier-resolution=node ./app.js"
   },
   "dependencies": {
-    "@odd_common/common": "^1.0.0",
+    "@odd_common/common": "^1.0.4",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "~2.6.1",
