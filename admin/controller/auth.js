@@ -19,7 +19,7 @@ export const login = async (req, res) => {
     let response = { ...defaultResponseObject };
     response.error = e.message || e;
     response.success = false;
-    res.status(400).send(response);
+    res.status(401).send(response);
   }
 };
 

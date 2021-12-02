@@ -33,6 +33,26 @@ export const calculate_fare = async (req, res) => {
   }
 };
 
+export const getDetails = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const order = await Order.findById(id)
+      .populate("user_id")
+      .populate("driver_id")
+      .populate("vehicle_id");
+    let response = { ...defaultResponseObject };
+    response.data = order;
+    response.message = "Order details fetched successfully";
+    return res.status(201).send(response);
+  } catch (e) {
+    let response = { ...defaultResponseObject };
+    response.error = e.message || e;
+    response.success = false;
+    res.status(400).send(response);
+  }
+};
+
 export const create_order = async (req, res) => {
   const { vehicle_id, pickup_info, drop_off_info } = req.body;
 
@@ -58,6 +78,7 @@ export const create_order = async (req, res) => {
       fare,
       drop_off_otp,
       pickup_otp,
+      user_id: req.user._id,
     });
     let response = { ...defaultResponseObject };
     response.data = order;

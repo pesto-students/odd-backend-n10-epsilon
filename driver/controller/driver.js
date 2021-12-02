@@ -38,6 +38,21 @@ export const verifyOtp = async (req, res) => {
   }
 };
 
+export const toggleMode = async (req, res) => {
+  try {
+    req.user.isOnline = !req.user.isOnline;
+    req.user.save();
+    let response = { ...defaultResponseObject };
+    response.data = { isOnline: req.user.isOnline };
+    return res.status(201).send(response);
+  } catch (e) {
+    let response = { ...defaultResponseObject };
+    response.error = e.message || e;
+    response.success = false;
+    res.status(400).send(response);
+  }
+};
+
 export const completeProfile = async (req, res) => {
   const updates = Object.keys(req.body);
   const allowedUpdates = [
