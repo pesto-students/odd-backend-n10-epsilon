@@ -89,7 +89,7 @@ export const completeProfile = async (req, res) => {
 export const uploadDocument = async (req, res) => {
   try {
     const { type } = req.body;
-    const doc = { type, path: req.doc };
+    const doc = { type, path: req.file.location };
     console.log(req.user);
     req.user.doc.push(doc);
     await req.user.save();
