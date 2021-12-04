@@ -61,8 +61,8 @@ export const completeProfile = async (req, res) => {
     "email",
     "city",
     "state",
-    "postal_code",
-    "language",
+    "city_postal_code",
+    "languages",
     "password",
   ];
   const isValidOperation = updates.every((update) =>
@@ -90,7 +90,7 @@ export const uploadDocument = async (req, res) => {
   try {
     const { type } = req.body;
     const doc = { type, path: req.file.location };
-    console.log(req.user);
+
     req.user.doc.push(doc);
     await req.user.save();
     let response = { ...defaultResponseObject };
