@@ -1,4 +1,5 @@
-import { Vehicle, Order, otpGenerator } from "@odd_common/common";
+import { Vehicle, Order, otpGenerator, Driver } from "@odd_common/common";
+
 import get_distance from "../helper/distance_bw_point";
 
 const defaultResponseObject = {
@@ -178,4 +179,54 @@ export const order_list = async (req, res) => {
     response.success = false;
     res.status(400).send(response);
   }
+};
+
+export const findDriver = async (req, res) => {
+  const { orderId } = req.params;
+  try {
+    const order = await Order.findById(orderId);
+    if (!order) throw new Error("Order not found!!");
+
+    const [lat, long] = order.pickup_info.location.coordinates;
+    let [driver] = await Driver.aggregate([
+      {
+        $geoNear: {
+          near: {
+            type: "Point",
+            coordinates: [parseFloat(lat), parseFloat(long)],
+          },
+          maxDistance: 9 * 1000,
+          query: {
+            // activeStatus: "1",
+            // driverStatus: "1",
+          },
+          distanceField: "distance",
+          includeLocs: "dist.location",
+          spherical: true,
+        },
+      },
+    ])
+      .sort({
+        distance: 1,
+      })
+      .limit(1);
+
+      if(driver){
+        order.driver_id = driver._id;
+        order.status = "accepted";
+        await order.save();
+        // todo implement socket here and notification
+        
+        
+      }
+      let response = { ...defaultResponseObject };
+      response.data = driver;
+      response.message = driver?"Find driver successfully":"Driver not found";
+      return res.status(200).send(response);
+    } catch (e) {
+      let response = { ...defaultResponseObject };
+      response.error = e.message || e;
+      response.success = false;
+      res.status(400).send(response);
+    }
 };

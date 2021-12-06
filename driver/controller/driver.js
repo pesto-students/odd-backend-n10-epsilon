@@ -1,4 +1,4 @@
-import { Driver, Vehicle } from "@odd_common/common";
+import { Driver, Vehicle, Order } from "@odd_common/common";
 const defaultResponseObject = {
   success: true,
   data: null, //{},[] or null
@@ -61,6 +61,8 @@ export const completeProfile = async (req, res) => {
     "email",
     "city",
     "state",
+    "document_submitted",
+    "vehicle_id",
     "city_postal_code",
     "languages",
     "password",
@@ -86,16 +88,52 @@ export const completeProfile = async (req, res) => {
   }
 };
 
-export const uploadDocument = async (req, res) => {
+export const getDetails = (req, res) => {
   try {
-    const { type } = req.body;
-    const doc = { type, path: req.file.location };
-
-    req.user.doc.push(doc);
-    await req.user.save();
     let response = { ...defaultResponseObject };
     response.data = req.user;
     return res.status(201).send(response);
+  } catch (e) {
+    console.log(2);
+    let response = { ...defaultResponseObject };
+    response.error = e.message || e;
+    response.success = false;
+    res.status(400).send(response);
+  }
+};
+
+export const uploadDocument = async (req, res) => {
+  try {
+    const { type } = req.body;
+    if (type === "profile_photo") req.user.image = req.file.location;
+    else {
+      const index = req.user.doc.findIndex((doc) => doc.type === type);
+      if (index === -1) {
+        req.user.doc.push({ type, path: req.file.location });
+      } else req.user.doc[index] = { type, path: req.file.location };
+    }
+    await req.user.save();
+    let response = { ...defaultResponseObject };
+    response.data = req.file.location;
+    return res.status(201).send(response);
+  } catch (e) {
+    console.log(2);
+    let response = { ...defaultResponseObject };
+    response.error = e.message || e;
+    response.success = false;
+    res.status(400).send(response);
+  }
+};
+
+export const getCurrentOrder = async (req, res) => {
+  try {
+    const order = await Order.findOne({
+      driver_id: req.user._id,
+      status: ["open", "accepted", "inprogress"],
+    });
+    let response = { ...defaultResponseObject };
+    response.data = order;
+    res.status(200).send(response);
   } catch (e) {
     let response = { ...defaultResponseObject };
     response.error = e.message || e;
@@ -104,12 +142,12 @@ export const uploadDocument = async (req, res) => {
   }
 };
 
-export const getVehicle = async (req, res) => {
+export const getAllVehicleList = async (req, res) => {
   try {
-    const vehicle = await Vehicle.find();
+    const vehicle = await Vehicle.getAllVehicleList(req);
     let response = { ...defaultResponseObject };
     response.data = vehicle;
-    return res.status(201).send(response);
+    res.status(200).send(response);
   } catch (e) {
     let response = { ...defaultResponseObject };
     response.error = e.message || e;
@@ -120,6 +158,7 @@ export const getVehicle = async (req, res) => {
 
 export const logout = async (req, res) => {
   try {
+    console.log(req.user);
     req.user.tokens = req.user.tokens.filter((token) => {
       return token.token !== req.token;
     });
