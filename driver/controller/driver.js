@@ -66,6 +66,7 @@ export const completeProfile = async (req, res) => {
     "city_postal_code",
     "languages",
     "password",
+    "vehicle_number"
   ];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)

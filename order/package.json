@@ -7,7 +7,7 @@
     "start": "NODE_ENV=prod nodemon --experimental-specifier-resolution=node ./app.js"
   },
   "dependencies": {
-    "@odd_common/common": "^1.0.9",
+    "@odd_common/common": "^1.0.10",
     "axios": "^0.24.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
