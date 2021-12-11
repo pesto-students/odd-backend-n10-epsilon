@@ -94,7 +94,6 @@ export const updateCoordinates = async (req, res) => {
   try {
     const id = req.user._id;
     const coordinates = req.body.coordinates;
-    console.log(coordinates);
     const driver = await Driver.findByIdAndUpdate(id, {
       "location.coordinates": coordinates,
     });

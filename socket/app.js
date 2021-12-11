@@ -9,7 +9,7 @@ import { dirname } from "path";
 
 import Routes from "./routes";
 
-import { config, connectDB, cors } from "@odd_common/common";
+import { config, connectDB, cors, Driver } from "@odd_common/common";
 import { Server } from "socket.io";
 import {
   createChannel,
@@ -40,10 +40,15 @@ const io = new Server(server, {
 });
 
 app.io = io.on("connection", (socket) => {
-  
   socket.on("join", (room) => {
-    console.log("romm");
     socket.join(room);
+  });
+
+  socket.on("updateCoordinate", async ({ driver_id, coordinates }) => {
+    console.log("jh", coordinates);
+    await Driver.findByIdAndUpdate(driver_id, {
+      "location.coordinates": coordinates,
+    });
   });
 
   const service = (payload) => {
