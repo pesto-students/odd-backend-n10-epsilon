@@ -164,7 +164,7 @@ export const update_order = async (req, res) => {
       req.user.has_order = false;
     } else if (status === "canceled") {
       order.status = status;
-    } else throw new Error("Invalid request");
+    } else throw new Error("Invalid OTP");
     const track_history = {
       status: status,
       location: {
