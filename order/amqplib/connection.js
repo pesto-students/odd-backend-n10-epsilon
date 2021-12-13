@@ -10,24 +10,12 @@ export const createChannel = async () => {
     const channel = await connection.createChannel();
     await channel.assertExchange(EXCHANGE_NAME, "direct", false);
     return channel;
-  } catch (error) {
-  }
+  } catch (error) {}
 };
 
 export const publishMessage = async (channel, binding_key, message) => {
   try {
     await channel.publish(EXCHANGE_NAME, binding_key, Buffer.from(message));
     console.log("message: sending");
-  } catch (error) {}
-};
-
-export const subscribeMessage = async (channel, service, binding_key) => {
-  try {
-    const appQueue = await channel.assertQueue("Queue_name");
-    channel.bindQueue(appQueue.queue, EXCHANGE_NAME, binding_key);
-    channel.consume(appQueue.queue, (data) => {
-      console.log(data.content.toString());
-      channel.ack(data);
-    });
   } catch (error) {}
 };

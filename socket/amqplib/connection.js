@@ -22,12 +22,15 @@ export const publishMessage = async (channel, binding_key, message) => {
 
 export const subscribeMessage = async (channel, service, binding_key) => {
   try {
+    // console.log(channel);
     const appQueue = await channel.assertQueue("ORDER_QUEUE");
     channel.bindQueue(appQueue.queue, EXCHANGE_NAME, binding_key);
     channel.consume(appQueue.queue, (data) => {
-      channel.ack(data);
-      const order = data.content.toString();
-      service(order);
+    channel.ack(data);
+    const order = data.content.toString();
+    service(order)
     });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
