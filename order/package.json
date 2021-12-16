@@ -1,13 +1,13 @@
 {
   "name": "order-service",
-  "version": "2.0.0",
+  "version": "4.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "start": "NODE_ENV=prod nodemon --experimental-specifier-resolution=node ./app.js"
   },
   "dependencies": {
-    "@odd_common/common": "^1.0.15",
+    "@odd_common/common": "^1.0.18",
     "amqplib": "^0.8.0",
     "axios": "^0.24.0",
     "cookie-parser": "~1.4.4",

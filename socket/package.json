@@ -1,6 +1,6 @@
 {
   "name": "socket-service",
-  "version": "1.0.0",
+  "version": "4.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,7 +10,7 @@
     "nodemon": "^2.0.15"
   },
   "dependencies": {
-    "@odd_common/common": "^1.0.12",
+    "@odd_common/common": "^1.0.18",
     "amqplib": "^0.8.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",

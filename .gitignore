@@ -9,3 +9,5 @@ redis.conf/
 **/.DS_Store
 
 yarn.lock
+y.pub
+y
