@@ -35,7 +35,7 @@ const io = new Server(server, {
     transports: ["websocket", "polling"],
     credentials: true,
   },
-  // path: "/mysocket",
+  path: "/mysocket",
   allowEIO3: true,
 });
 
