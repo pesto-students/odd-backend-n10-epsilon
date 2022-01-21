@@ -15,7 +15,7 @@ export const getAllUsersList = async (req, res) => {
       mobile_number;
 
     if (data.query) {
-      console.log(data.query);
+      // console.log(data.query);
       // mobile_number = data.;
       where = {
         $or: [{ mobile_number: { $regex: data.query, $options: "i" } }],
@@ -32,7 +32,7 @@ export const getAllUsersList = async (req, res) => {
     } else {
       sortBy.created_at = -1;
     }
-    console.log(where);
+    // console.log(where);
 
     const users = await User.aggregate([
       {

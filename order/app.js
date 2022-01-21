@@ -9,7 +9,7 @@ import { dirname } from "path";
 
 import { Routes } from "./routes";
 
-import { config, connectDB ,cors} from "@odd_common/common";
+import { config, connectDB, cors } from "@odd_common/common";
 
 var app = express();
 connectDB();

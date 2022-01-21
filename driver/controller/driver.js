@@ -114,7 +114,7 @@ export const getDetails = (req, res) => {
     response.data = req.user;
     return res.status(201).send(response);
   } catch (e) {
-    console.log(2);
+    // console.log(2);
     let response = { ...defaultResponseObject };
     response.error = e.message || e;
     response.success = false;
@@ -137,7 +137,7 @@ export const uploadDocument = async (req, res) => {
     response.data = req.file.location;
     return res.status(201).send(response);
   } catch (e) {
-    console.log(2);
+    // console.log(2);
     let response = { ...defaultResponseObject };
     response.error = e.message || e;
     response.success = false;
@@ -238,7 +238,7 @@ export const tripAndPayments = async (req, res) => {
 
 export const logout = async (req, res) => {
   try {
-    console.log(req.user);
+    // console.log(req.user);
     req.user.tokens = req.user.tokens.filter((token) => {
       return token.token !== req.token;
     });
