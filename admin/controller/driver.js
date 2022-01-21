@@ -14,7 +14,7 @@ export const getAllDriverList = async (req, res) => {
       mobile_number;
 
     if (data.query) {
-      console.log(data.query);
+      // console.log(data.query);
       // mobile_number = data.;
       where = {
         $or: [{ mobile_number: { $regex: data.query, $options: "i" } }],

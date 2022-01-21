@@ -93,7 +93,7 @@ export const create_order = async (req, res) => {
       receipt: otpGenerator(),
       payment_capture,
     };
-    console.log(options);
+    // console.log(options);
     const razPayData = await razorpay.orders.create(options);
 
     const order = await Order.create({
@@ -122,15 +122,15 @@ export const verification = (req, res) => {
   // do a validation
   try {
     const secret = "12345678";
-    console.log(req.body);
+    // console.log(req.body);
     const shasum = crypto.createHmac("sha256", secret);
     shasum.update(JSON.stringify(req.body));
     const digest = shasum.digest("hex");
 
-    console.log(digest, req.headers["x-razorpay-signature"]);
+    // console.log(digest, req.headers["x-razorpay-signature"]);
 
     if (digest === req.headers["x-razorpay-signature"]) {
-      console.log("request is legit");
+      // console.log("request is legit");
       // process it
       const order_id = req.body.payload.payment.entity.order_id;
       Order.findAndUpdate({ order_id }, { payment_data: req.body });
