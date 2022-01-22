@@ -16,21 +16,21 @@ export const createChannel = async () => {
 export const publishMessage = async (channel, binding_key, message) => {
   try {
     await channel.publish(EXCHANGE_NAME, binding_key, Buffer.from(message));
-    console.log("message: sending");
+    // console.log("message: sending");
   } catch (error) {}
 };
 
 export const subscribeMessage = async (channel, service, binding_key) => {
   try {
-    // console.log(channel);
+    //// console.log(channel);
     const appQueue = await channel.assertQueue("ORDER_QUEUE");
     channel.bindQueue(appQueue.queue, EXCHANGE_NAME, binding_key);
     channel.consume(appQueue.queue, (data) => {
-    channel.ack(data);
-    const order = data.content.toString();
-    service(order)
+      channel.ack(data);
+      const order = data.content.toString();
+      service(order);
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };

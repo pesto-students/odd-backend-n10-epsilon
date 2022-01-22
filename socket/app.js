@@ -45,7 +45,7 @@ app.io = io.on("connection", (socket) => {
   });
 
   socket.on("updateCoordinate", async ({ driver_id, coordinates }) => {
-    console.log("jh", coordinates);
+    // console.log("jh", coordinates);
     await Driver.findByIdAndUpdate(driver_id, {
       "location.coordinates": coordinates,
     });
@@ -54,7 +54,7 @@ app.io = io.on("connection", (socket) => {
 
 const service = (payload) => {
   const { room, data, event } = JSON.parse(payload);
-  console.log({ room, data, event });
+  // console.log({ room, data, event });
   switch (event) {
     case "NEW_ORDER":
       {
@@ -172,7 +172,7 @@ function onError(error) {
 function onListening() {
   var addr = server.address();
   var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
-  console.log("Listening on " + bind);
+  // console.log("Listening on " + bind);
 }
 
 export default app;

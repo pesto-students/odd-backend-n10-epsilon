@@ -9,7 +9,7 @@ import { dirname } from "path";
 
 import { Routes } from "./routes";
 
-import { config, connectDB, cors} from "@odd_common/common";
+import { config, connectDB, cors } from "@odd_common/common";
 
 var app = express();
 connectDB();
@@ -118,7 +118,7 @@ function onError(error) {
 function onListening() {
   var addr = server.address();
   var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
-  console.log("Listening on " + bind);
+  // console.log("Listening on " + bind);
 }
 
 export default app;
