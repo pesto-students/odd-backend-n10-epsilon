@@ -1,0 +1,15 @@
+**/node_modules
+db
+**/package-lock.json
+redis-data/
+redis.conf/
+
+.DS_Store
+**/.env
+**/.DS_Store
+
+yarn.lock
+y.pub
+y
+do
+do.pub
