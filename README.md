@@ -1,9 +1,10 @@
+![ODD Logo](https://user-images.githubusercontent.com/47411494/150539976-aeeb2133-e52f-45e1-9a42-2b1b4e043803.png)
+
 # ODD (On Demand Delivery)
 
 ODD is an on-demand delivery app, where users can make request to deliver their packages from one location to another within India(for now some of the selected cities)
 
-Most of the time what happens is, If someone wants to deliver a package to another location, they have to search nearby “Truck wala or Rrickshaw wala" with no fixed prices.
-ODD tries to solve the problems by providing a platform where users can find and book the vehicle that suits their needs, and deliver packages to the destination without any extra effort and within fair price.
+Most of the time what happens is, If someone wants to deliver a package to another location, they have to search nearby “Truck wala or Rrickshaw wala" with no fixed prices. ODD tries to solve the problems by providing a platform where users can find and book the vehicle that suits their needs, and deliver packages to the destination without any extra effort and within fair price.
 
 ## Roles
 
@@ -11,23 +12,35 @@ ODD tries to solve the problems by providing a platform where users can find and
 - DRIVER - A person who is responsible for delivering a package
 - ADMIN - A person who can see statistics of services and details of Users, Drivers and Orders.
 
-## System Architecture
+# Table of Contents
 
-This application is made on microservices architecture. A microservices architecture consists of a collection of small, autonomous services. Each service is self-contained and should implement a single business capability within a bounded context. A bounded context is a natural division within a business and provides an explicit boundary within which a domain model exists.
+1. [Demo](#demo)
+2. [Installation](#installation)
+3. [System Architecture](#system-Architecture)
+4. [Technology Stack](#technology-stack)
+5. [Custom Package](#custom-package)
+6. [Authors](#authors)
+7. [License](#license)
 
-## Tech Stack
+# Demo
 
-**Client:** React, Redux, TailwindCSS
+- [Driver App](http://driver-app-odd.s3-website.ap-south-1.amazonaws.com/)
+- [User App](http://user-app-odd.s3-website.ap-south-1.amazonaws.com/)
+- [Admin App](http://admin-app-odd.s3-website.ap-south-1.amazonaws.com/)
 
-**Server:** Node, Express, Socket
+Test Credentials:
 
-**Database:** Mongodb, S3 bucket
+- For Driver
+  - Phone: 9999999999
+  - OTP: 0000
+- For User
+  - Phone: 8888888888
+  - OTP: 0000
+- For Admin
+  - Email: admin@mailinator.com
+  - Password: 12345678
 
-**Event Queue:** Rabbitmq
-
-**Proxy Server:** Ngix
-
-## Run Locally
+# Installation
 
 Clone the project
 
@@ -40,6 +53,8 @@ Go to the project directory
 ```bash
   cd odd-backend-n10-epsilon
 ```
+
+## Run Locally
 
 Build docker image
 
@@ -85,18 +100,34 @@ Socket Connection
   http://localhots/socket/mysocket/
 ```
 
-## Folder structure
+# System Architecture
 
-- User - User service
-- Driver - Driver service
-- Admin - Admin service
-- Order - Order service
-- Socket - Socket service
-- Proxy - Ngix proxy server
-- Package - Contains common file as npm package
+This application is made on microservices architecture. A microservices architecture consists of a collection of small, autonomous services. Each service is self-contained and should implement a single business capability within a bounded context. A bounded context is a natural division within a business and provides an explicit boundary within which a domain model exists.
 
-## Custom Package
+# Technology Stack
+
+We tried to use a completely modern tech stack while testing out some new technologies that we had never used before. This resulted in a fast, performant, and easily-extensible web app that should be fairly future-proof for the coming next several years. We used:
+
+- **Server:** [Node](https://nodejs.org/), [Express](https://expressjs.com/), [SocketIO](https://socket.io/)
+- **Database:** [Mongodb](https://www.mongodb.com/), [Mongodb](https://aws.amazon.com/s3/)
+- **Event Queue:** [RabbitMQ](https://www.rabbitmq.com/)
+- **Proxy Server:** [Ngix](https://www.nginx.com/)
+
+# Custom Package
 
 To instal @odd_common/common
 
 RUN `npm install @odd_common/common` for ways to get started.
+
+```bash
+    git clone https://github.com/pesto-students/odd_packages.git
+```
+
+# Authors
+
+- [Dharmendra Jagodana](https://github.com/JagodanaDharmendra)
+- [Akash Malviya](https://github.com/Akashmalviya)
+
+# License
+
+[MIT](https://opensource.org/licenses/MIT)
