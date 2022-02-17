@@ -55,18 +55,8 @@ app.io = io.on("connection", (socket) => {
 const service = (payload) => {
   const { room, data, event } = JSON.parse(payload);
   console.log({ room, data, event });
-  switch (event) {
-    case "NEW_ORDER":
-      {
-        io.to(room).emit(event, data);
-      }
-      break;
-    case "STATUS_CHANGE":
-      {
-        io.to(room).emit(event, data);
-      }
-      break;
-  }
+  io.to(room).emit(event, data);
+
 };
 
 subscribeMessage(channel, service, "NEW_ORDER");
