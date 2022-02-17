@@ -1,4 +1,4 @@
-import { Driver, Vehicle, Order } from "@odd_common/common";
+import { Driver, Vehicle, Order, DriverStatics } from "@odd_common/common";
 const defaultResponseObject = {
   success: true,
   data: null, //{},[] or null
@@ -178,22 +178,27 @@ export const getAllVehicleList = async (req, res) => {
 
 export const getStatics = async (req, res) => {
   try {
-    const order = await Order.find({ driver_id: req.user._id });
 
-    const earning = order.reduce(
-      (accumulator, order) => accumulator + order.fare,
-      0
-    );
-    const distance = order.reduce(
-      (accumulator, order) => accumulator + order.distance,
-      0
-    );
+    let state = DriverStatics.findOne({ driver_id: req.user._id })
+    if (!state) {
+      const order = await Order.find({ driver_id: req.user._id });
+
+      const earning = order.reduce(
+        (accumulator, order) => accumulator + order.fare,
+        0
+      );
+      const distance = order.reduce(
+        (accumulator, order) => accumulator + order.distance,
+        0
+      );
+       state = DriverStatics.create({ driver_id: req.user._id, total_distance_travel: distance, total_earning: earning, number_of_trips: order.length })
+    }
 
     let response = { ...defaultResponseObject };
     response.data = {
-      earning: earning.toFixed(0),
-      distance,
-      order: order.length,
+      earning: state.earning,
+      distance:state.total_distance_travel,
+      order: state.number_of_trips,
     };
     res.status(200).send(response);
   } catch (e) {

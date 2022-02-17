@@ -1,4 +1,4 @@
-import { Vehicle, Order, otpGenerator, Driver } from "@odd_common/common";
+import { Vehicle, Order, otpGenerator, Driver, DriverStatics } from "@odd_common/common";
 import { createChannel, publishMessage } from "../amqplib/connection";
 import Razorpay from "razorpay";
 import crypto from "crypto";
@@ -162,6 +162,16 @@ export const update_order = async (req, res) => {
     ) {
       order.status = status;
       req.user.has_order = false;
+      const data = await DriverStatics.findOne({ driver_id: order.driver_id });
+      if (data) {
+        data.total_distance_travel = data.total_distance_travel + order.distance;
+        data.total_earning = +(data.total_earning + order.fare);
+        data.number_of_trips += 1;
+      }
+      await data.save();
+      const statsUpdate = { room: order.driver_id, data: data, event: "STAT_CHANGE" };
+      console.log(statsUpdate);
+      publishMessage(channel, "NEW_ORDER", JSON.stringify(statsUpdate));
     } else if (status === "canceled") {
       order.status = status;
     } else throw new Error("Invalid OTP");
@@ -176,6 +186,7 @@ export const update_order = async (req, res) => {
     order.track_history.push(track_history);
     await order.save();
     await req.user.save();
+
     const data = { room: order._id, data: order, event: "STATUS_CHANGE" };
     publishMessage(channel, "NEW_ORDER", JSON.stringify(data));
     let response = { ...defaultResponseObject };
